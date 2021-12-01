@@ -44,6 +44,6 @@ class User extends Authenticatable
     ];
 
     public function files() {
-        return $this->hasMany(File::class)->orderBy('name', 'asc');
+        return $this->hasMany(File::class);
     }
 }

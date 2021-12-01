@@ -60,39 +60,44 @@
                 </tr>
                 </thead>
                 <tbody class="bg-white">
-                @foreach($user->files as $file)
-                <tr>
-                    <td class="border px-4 py-2">{{ $file->name }}</td>
-                    <td class="border px-4 py-2">{{ $file->size }} KB</td>
-                    <td class="border px-4 py-2">{{ $file->created_at }}</td>
-                    <td class="border px-4 py-2">{{ $file->updated_at }}</td>
-                    <td class="border px-4 py-2"><a href="/files/{{ $file->id }}/edit"><button class="bg-yellow-300 hover:bg-yellow-400 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">Edit</button></a></td>
+                @foreach($files as $file)
+                    <tr>
+                        <td class="border px-4 py-2">{{ $file->name }}</td>
+                        <td class="border px-4 py-2">{{ $file->size }} KB</td>
+                        <td class="border px-4 py-2">{{ $file->created_at }}</td>
+                        <td class="border px-4 py-2">{{ $file->updated_at }}</td>
+                        <td class="border px-4 py-2"><a href="/files/{{ $file->id }}/edit"><button class="bg-yellow-300 hover:bg-yellow-400 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">Edit</button></a></td>
 
-                    <td class="border px-4 py-2">
-                        <form action="/files/{{ $file->id }}" method="post">
-                            @csrf
-                            @method('DELETE')
+                        <td class="border px-4 py-2">
+                            <form action="/files/{{ $file->id }}" method="post">
+                                @csrf
+                                @method('DELETE')
 
-                            <button class="bg-red-500 hover:bg-red-600 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" type="submit">
-                                Delete
-                            </button>
-                        </form>
-                    </td>
+                                <button class="bg-red-500 hover:bg-red-600 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" type="submit">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
 
-                    <td class="border px-4 py-2">
-                        <form action="/files/{{ $file->id }}" method="get">
-                            @csrf
+                        <td class="border px-4 py-2">
+                            <form action="/files/{{ $file->id }}" method="get">
+                                @csrf
 
-                            <button class="bg-blue-500 hover:bg-blue-600 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-                                Download
-                            </button>
-                        </form>
-                    </td>
+                                <button class="bg-blue-500 hover:bg-blue-600 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                                    Download
+                                </button>
+                            </form>
+                        </td>
 
-                </tr>
+                    </tr>
                 @endforeach
                 </tbody>
             </table>
+
+            <div class="mt-6" id="container">
+                {{ $files->links() }}
+            </div>
+
         </div>
 
     </div>

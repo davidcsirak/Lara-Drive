@@ -45,7 +45,6 @@ class FilesController extends Controller
                     'file' => $filePath,
                 ]);
 
-                dd($request->all());
                 return Redirect::route('home');
             }
         }
