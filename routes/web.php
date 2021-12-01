@@ -21,6 +21,9 @@ Route::get('/files/create', [\App\Http\Controllers\FilesController::class, 'crea
 Route::post('/files', [\App\Http\Controllers\FilesController::class, 'store'])->name('files.store');
 Route::get('/files/{file}/edit', [\App\Http\Controllers\FilesController::class, 'edit'])->name('files.edit');
 Route::patch('/files/{file}', [\App\Http\Controllers\FilesController::class, 'update'])->name('files.update');
+Route::delete('/files/{file}', [\App\Http\Controllers\FilesController::class, 'delete'])->name('files.destroy');
+Route::get('/files/redirect', [\App\Http\Controllers\FilesController::class, 'redirect'])->name('files.redirect');
+Route::get('/files/{file}', [\App\Http\Controllers\FilesController::class, 'download'])->name('files.download');
 
 
 Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');

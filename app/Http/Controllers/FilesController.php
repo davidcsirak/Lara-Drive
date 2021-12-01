@@ -6,6 +6,9 @@ use App\Models\File;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class FilesController extends Controller
 {
@@ -42,6 +45,7 @@ class FilesController extends Controller
                     'file' => $filePath,
                 ]);
 
+                dd($request->all());
                 return Redirect::route('home');
             }
         }
@@ -49,26 +53,51 @@ class FilesController extends Controller
     }
 
     public function edit(File $file) {
+        $this->authorize('update', $file);
+
         return view('files.edit', compact('file'));
     }
 
-    public function update($id) {
+    public function update(File $file) {
 
-        dd($id);
+//        $file = File::findorfail($id);
+        $this->authorize('update', $file); //egy masik bejelentkezett felhasznalo nem éri el a saját fileunk editjét a policynek koszonhetoen
 
-//        $file = File::find($id);
+        if (\request()->name) {
 
-//        dd(\request()->all());
-//        $data = \request()->validate([
-//            'name' => 'required'
-//        ]);
+            $data = \request()->validate([
+                'name' => 'required'
+            ]);
+            $file->update($data);
 
-//        dd($data);
+//            $content = Storage::disk('public')->get($file->file);
+            return Redirect::route('home');
+        }
 
-//        $file->update($data);
-//
-//        Redirect::route('home');
+        return Redirect::back();
 
+    }
+
+    public function delete(File $file) {
+
+        $file->delete();
+
+        return Redirect::route('home');
+    }
+
+    public function redirect() {
+
+        Session::flash('download.in.the.next.request', route('files.download'));
+
+        return Redirect::route('home');
+
+    }
+
+    public function download(File $file) {
+        $fileName = $file->name;
+        $filePath = 'storage/' . $file->file;
+
+        return Response::download($filePath,$fileName);
     }
 
     private function convert_to_kb($bytes){

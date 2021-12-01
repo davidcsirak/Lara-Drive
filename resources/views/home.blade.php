@@ -35,19 +35,19 @@
 
                     <a href="/files/create">
                         <button class="bg-green-400 hover:bg-green-500 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-                            New File
+                            Upload File
                         </button>
                     </a>
                     <a>
                         <button class="bg-green-400 hover:bg-green-500 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-                            New Text File
+                            Create Text File
                         </button>
                     </a>
 
                 </div>
 
             </div>
-            <table class="table-auto mt-6">
+            <table class="table-fixed mt-6">
                 <thead>
                 <tr class="bg-gray-400">
                     <th class="w-1/2 px-4 py-2">Name</th>
@@ -56,6 +56,7 @@
                     <th class="w-1/4 px-4 py-2">Updated at</th>
                     <th class="w-1/4 px-4 py-2">Edit</th>
                     <th class="w-1/4 px-4 py-2">Delete</th>
+                    <th class="w-1/4 px-4 py-2">Download</th>
                 </tr>
                 </thead>
                 <tbody class="bg-white">
@@ -66,7 +67,28 @@
                     <td class="border px-4 py-2">{{ $file->created_at }}</td>
                     <td class="border px-4 py-2">{{ $file->updated_at }}</td>
                     <td class="border px-4 py-2"><a href="/files/{{ $file->id }}/edit"><button class="bg-yellow-300 hover:bg-yellow-400 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">Edit</button></a></td>
-                    <td class="border px-4 py-2"><a href="/files/{{ $file->id }}"><button class="bg-red-500 hover:bg-red-600 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">Delete</button></a></td>
+
+                    <td class="border px-4 py-2">
+                        <form action="/files/{{ $file->id }}" method="post">
+                            @csrf
+                            @method('DELETE')
+
+                            <button class="bg-red-500 hover:bg-red-600 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" type="submit">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
+
+                    <td class="border px-4 py-2">
+                        <form action="/files/{{ $file->id }}" method="get">
+                            @csrf
+
+                            <button class="bg-blue-500 hover:bg-blue-600 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                                Download
+                            </button>
+                        </form>
+                    </td>
+
                 </tr>
                 @endforeach
                 </tbody>
