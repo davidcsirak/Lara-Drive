@@ -23,32 +23,86 @@ class FilesController extends Controller
     }
 
     public function store(Request $request) {
-        if ($request->file('file')) {
 
+        if ($request->file('file')) {  // in case uploading from local storage
             $size = $request->file('file')->getSize();
             $size = $this->convert_to_kb($size);
-
             $name = $request->file('file')->getClientOriginalName();
+            $type = $request->file('file')->getClientOriginalExtension();
 
-            $request->request->add([ 'size' => $size, 'name' => $name]);
+            $request->request->add(['name' => $name, 'size' => $size, 'type' => $type]);
 
             $data = $request->validate([
-                'size' => '',
-                'name' => '',
+                'name' => 'required',
+                'size' => 'required',
+                'type' => 'required',
                 'file' => 'required'
             ]);
 
-            if ($filePath = $request->file('file')->store('uploads/files', 'public')) {
+            $path = Storage::putFile('/uploads', $request->file('file'));
+
+            //in case of uploading text file
+            if (($path != null ) && $type == 'txt') {  //storing file in storage with the name and context from the request, can be added more extensions to work with
+//                dd($path);
+//                dd($content = Storage::path($path));
+                $content = Storage::disk('local')->get($path);
+
                 auth()->user()->files()->create([
                     'name' => $data['name'],
                     'size' => $data['size'],
-                    'file' => $filePath,
+                    'path' => $path,
+                    'content' => $content,
+                    'type' => $type
                 ]);
 
-                return Redirect::route('home');
+                //in case of uploading a non text file content will be null
+
+            } elseif (($path != null) && $type != 'txt') {
+
+                auth()->user()->files()->create([
+                    'name' => $data['name'],
+                    'size' => $data['size'],
+                    'path' => $path,
+                    'type' => $type
+                ]);
             }
+
+            return Redirect::route('home');
+
+
+        } elseif (!$request->file('file')) {  // in case creating text file on the page
+
+            $fileContent = $request->get('content');
+            $fileName = $request->get('name') . '.txt';
+            $filePath = 'uploads/' . $fileName;
+            Storage::put($filePath, $fileContent);  //storing file in storage with the name and context from the request
+            $fileSize = Storage::size($filePath);
+            $fileSize = $this->convert_to_kb($fileSize);
+            $fileType = pathinfo($filePath, PATHINFO_EXTENSION);
+
+            $request->request->add(['size' => $fileSize, 'type' => $fileType]);
+
+            $request->validate([
+                'name' => 'required',
+                'size' => 'required',
+                'type' => 'required',
+                'content' => '',   // a text files content can be null and later edited
+            ]);
+
+            auth()->user()->files()->create([
+                'name' => $fileName,
+                'size' => $fileSize,
+                'path' => $filePath,
+                'content' => $fileContent,
+                'type' => $fileType
+            ]);
+
+            return Redirect::route('home');
         }
+
         return Redirect::back();
+
+
     }
 
     public function edit(File $file) {
@@ -59,27 +113,40 @@ class FilesController extends Controller
 
     public function update(File $file) {
 
-//        $file = File::findorfail($id);
         $this->authorize('update', $file); //egy masik bejelentkezett felhasznalo nem éri el a saját fileunk editjét a policynek koszonhetoen
 
-        if (\request()->name) {
+        if (\request()->has('content')) {
 
             $data = \request()->validate([
-                'name' => 'required'
+                'name' => 'required',
+                'content' => ''
             ]);
-            $file->update($data);
 
-//            $content = Storage::disk('public')->get($file->file);
+            $file->update($data);  //update data in DB
+
+            $content = \request()->get('content');
+            file_put_contents(storage_path('/app/' . $file->path), $content); //update data in local storage
+
             return Redirect::route('home');
         }
+        else {
 
-        return Redirect::back();
+            $data = \request()->validate([
+                'name' => 'required',
+            ]);
+
+            $file->update($data);
+
+            return Redirect::route('home');
+        }
 
     }
 
     public function delete(File $file) {
 
-        $file->delete();
+        $file->delete(); //deletinng from DB
+
+        Storage::delete($file->path); //deleteing from local storage
 
         return Redirect::route('home');
     }
@@ -94,7 +161,8 @@ class FilesController extends Controller
 
     public function download(File $file) {
         $fileName = $file->name;
-        $filePath = 'storage/' . $file->file;
+
+        $filePath = storage_path('/app/' . $file->path);
 
         return Response::download($filePath,$fileName);
     }

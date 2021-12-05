@@ -2,9 +2,9 @@
 
 @section('content')
 
-    <h1 class="text-4xl ml-10 pt-10 flex justify-center">New File</h1>
+    <h1 class="text-4xl ml-10 pt-10 flex justify-center">Upload File</h1>
     <div class="flex justify-center">
-        <div class="w-full max-w-xs py-12 ml-10">
+        <div class="max-w-full py-12 ml-10">
             <form class="bg-white shadow-md rounded px-8 pt-6 pb-8" action="{{ route('files.store') }}" enctype="multipart/form-data" method="post">
                 @csrf
 
@@ -16,7 +16,7 @@
                 </div>
                 <div class="flex items-center justify-center space-x-5">
                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                        Create
+                        Upload
                     </button>
                     <a href="{{ route('home') }}">
                         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">

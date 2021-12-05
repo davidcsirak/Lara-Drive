@@ -4,9 +4,10 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    {{ $user->name }} You're logged in!
+                <div class="p-6 bg-white border-b border-gray-200 text-blue-600 font-bold">
+                    {{ $user->name }} You're logged in! | Only text files content can be edited!
                 </div>
+
             </div>
 
 
@@ -38,7 +39,7 @@
                             Upload File
                         </button>
                     </a>
-                    <a>
+                    <a href="/textfiles/create">
                         <button class="bg-green-400 hover:bg-green-500 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
                             Create Text File
                         </button>
