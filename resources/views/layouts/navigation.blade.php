@@ -4,9 +4,10 @@
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
-                <div class="flex-shrink-0 flex items-center">
-                    <a>
-                        <x-application-logo class="block h-10 w-auto fill-current text-gray-600" />
+                <div class="flex-shrink-0 flex items-center cursor-pointer">
+                    <a href="{{ route('home') }}">
+                        <img src="{{ asset('storage/logo.png') }}" class="block h-16 w-auto fill-current text-gray-600">
+
                     </a>
                 </div>
             </div>

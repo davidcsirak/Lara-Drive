@@ -26,8 +26,8 @@ Route::get('/files/redirect', [\App\Http\Controllers\FilesController::class, 're
 Route::get('/files/{file}', [\App\Http\Controllers\FilesController::class, 'download'])->name('files.download');
 
 Route::get('/textfiles/create', [\App\Http\Controllers\TextfilesController::class, 'create'])->name('textfiles.create');
-Route::post('/textfiles', [\App\Http\Controllers\TextfilesController::class, 'store'])->name('textfiles.store');
 
 Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home/index-search', [\App\Http\Controllers\HomeController::class, 'indexSearch'])->name('search');
 
 require __DIR__.'/auth.php';
