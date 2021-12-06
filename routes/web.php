@@ -27,6 +27,12 @@ Route::get('/files/{file}', [\App\Http\Controllers\FilesController::class, 'down
 
 Route::get('/textfiles/create', [\App\Http\Controllers\TextfilesController::class, 'create'])->name('textfiles.create');
 
+Route::get('/custom-forgot-password', [\App\Http\Controllers\CustomPasswordResetController::class, 'create'])->name('custom.password.create');
+Route::post('/custom-forgot-password', [\App\Http\Controllers\CustomPasswordResetController::class, 'store'])->name('custom.password.store');
+
+Route::get('/custom-forgot-username', [\App\Http\Controllers\CustomUsernameResetController::class, 'create'])->name('custom.username.create');
+Route::post('/custom-forgot-username', [\App\Http\Controllers\CustomUsernameResetController::class, 'store'])->name('custom.username.store');
+
 Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home/index-search', [\App\Http\Controllers\HomeController::class, 'indexSearch'])->name('search');
 

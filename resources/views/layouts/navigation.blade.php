@@ -6,8 +6,7 @@
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center cursor-pointer">
                     <a href="{{ route('home') }}">
-                        <img src="{{ asset('storage/logo.png') }}" class="block h-16 w-auto fill-current text-gray-600">
-
+                        <img src="{{ asset('storage/logo.png') }}" class="block h-12 w-auto fill-current text-gray-600">
                     </a>
                 </div>
             </div>
@@ -41,7 +40,8 @@
                     </x-slot>
 
                 </x-dropdown>
-                <a href="#" class="ml-10">Edit profile</a>
+                <a href="{{ route('custom.password.create') }}" class="ml-10 text-sm font-semibold">Reset Password</a>
+                <a href="{{ route('custom.username.create') }}" class="ml-10 text-sm font-semibold">Reset Username</a>
             </div>
         </div>
     </div>
