@@ -21,6 +21,7 @@ class CreateFilesTable extends Migration
             $table->string('path');
             $table->longText('content')->nullable();
             $table->string('type');
+            $table->string('from')->nullable();
             $table->timestamps();
 
             $table->index('user_id');

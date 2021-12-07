@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="py-12">
-        <div class="max-w-max mx-auto sm:px-6 lg:px-8">
+        <div class="mx-52 sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200 text-blue-600 font-bold">
                     {{ $user->name }} You're logged in! | Only text files content can be edited!
@@ -36,7 +36,7 @@
 
                 </div>
 
-                <div id="buttons" class="mt-2">
+                <div id="buttons" class="mt-2 space-x-5">
 
                     <a href="/files/create">
                         <button class="bg-green-400 hover:bg-green-500 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
@@ -46,6 +46,11 @@
                     <a href="/textfiles/create">
                         <button class="bg-green-400 hover:bg-green-500 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
                             Create Text File
+                        </button>
+                    </a>
+                    <a href="{{ route('send.files.create') }}">
+                        <button class="bg-yellow-500 hover:bg-yellow-600 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                            Send Files
                         </button>
                     </a>
 
@@ -67,6 +72,7 @@
                     <th class="w-1/4 px-4 py-2">Edit</th>
                     <th class="w-1/4 px-4 py-2">Delete</th>
                     <th class="w-1/4 px-4 py-2">Download</th>
+                    <th class="w-1/4 px-4 py-2">From</th>
                 </tr>
                 </thead>
                 <tbody class="bg-white">
@@ -104,6 +110,7 @@
                                     </button>
                                 </form>
                             </td>
+                            <td class="border px-4 py-2">{{ $file->from }}</td>
                         </tr>
                     @endforeach
                 </tbody>

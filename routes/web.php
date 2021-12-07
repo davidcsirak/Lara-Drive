@@ -33,6 +33,9 @@ Route::post('/custom-forgot-password', [\App\Http\Controllers\CustomPasswordRese
 Route::get('/custom-forgot-username', [\App\Http\Controllers\CustomUsernameResetController::class, 'create'])->name('custom.username.create');
 Route::post('/custom-forgot-username', [\App\Http\Controllers\CustomUsernameResetController::class, 'store'])->name('custom.username.store');
 
+Route::get('/send-files/create', [\App\Http\Controllers\SendFilesController::class, 'create'])->name('send.files.create');
+Route::post('/send-files/store', [\App\Http\Controllers\SendFilesController::class, 'store'])->name('send.files.store');
+
 Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home/index-search', [\App\Http\Controllers\HomeController::class, 'indexSearch'])->name('search');
 
