@@ -1,7 +1,7 @@
 Lara-Drive
  =========
 
-* Application using Laravel PHP and MySQL with authentication for FILE:
+* Application using Laravel PHP and MySQL local database with authentication for FILE:
     - uploading 
     - text file creating 
     - listing
