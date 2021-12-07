@@ -20,7 +20,7 @@ class HomeController extends Controller
 
         $userid = $user->id;
 
-        $products = File::sortable()->where('user_id', '=', $userid)->orderBy('name')->paginate(5);
+        $products = File::sortable()->where('user_id', '=', $userid)->orderBy('name')->paginate(20);
 
         //return view('home', compact('user'));
         return view('home',[
@@ -43,7 +43,7 @@ class HomeController extends Controller
         } else {
             $files = File::sortable()
                 ->where('user_id', '=', $userid)
-                ->paginate(5);
+                ->paginate(20);
         }
 
         //return view('home')->with('products', $files)->with('filter', $search);

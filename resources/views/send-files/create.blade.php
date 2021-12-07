@@ -26,10 +26,15 @@
                         <option value="{{ $file->id }}">{{ $file->name }}</option>
                     @endforeach
                 </select>
-                <div>
-                    <button type="submit" class="mt-10">
-                        Submit
+                <div class="flex items-center justify-center space-x-5 mt-36 ">
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                        Send
                     </button>
+                    <a href="{{ route('home') }}">
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+                            Cancel
+                        </button>
+                    </a>
                 </div>
             </form>
         </div>
