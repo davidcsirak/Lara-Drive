@@ -1,5 +1,5 @@
-# Lara-Drive
- =========
+Lara-Drive
+=========
 
 ## Demo video: https://youtu.be/V90VHmWr0Rc
 
